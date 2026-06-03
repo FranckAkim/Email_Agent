@@ -1,4 +1,5 @@
 from fastapi import APIRouter, HTTPException
+from fastapi.responses import RedirectResponse
 from app.services.auth_service import get_authorization_url, exchange_code_for_token
 
 router = APIRouter()
@@ -16,5 +17,6 @@ def callback(code: str = None, state: str = None, error: str = None):
         raise HTTPException(status_code=400, detail="No code provided")
     
     token_data = exchange_code_for_token(code, state)
-    return {"message": "Authentication successful", "token": token_data}
+    access_token = token_data["access_token"]
+    return RedirectResponse(url=f"http://localhost:3000/callback?token={access_token}")
 
