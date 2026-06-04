@@ -2,6 +2,8 @@ from fastapi import APIRouter, HTTPException
 from app.services.gmail_service import fetch_emails
 from app.services.agent_service import analyze_emails
 from app.services.draft_service import generate_drafts_for_flagged
+from app.services.gmail_service import fetch_emails, send_email
+from pydantic import BaseModel
 
 router = APIRouter()
 
@@ -33,4 +35,17 @@ def get_drafts(access_token: str):
         return {"drafts": drafts, "count": len(drafts)}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
-    
+
+class SendEmailRequest(BaseModel):
+    access_token: str
+    to: str
+    subject: str
+    body: str
+
+@router.post("/emails/send")
+def send_email_route(request: SendEmailRequest):
+    try:
+        result = send_email(request.access_token, request.to, request.subject, request.body)
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
