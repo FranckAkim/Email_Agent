@@ -70,6 +70,10 @@ export default function Drafts() {
     setEditing(prev => ({ ...prev, [email.gmail_id]: false }))
   }
 
+  const handleDismiss = (gmail_id) => {
+    setDrafts(prev => prev.filter(email => email.gmail_id !== gmail_id))
+}
+
   if (loading) return <div className="min-h-screen flex items-center justify-center">Generating drafts...</div>
   if (error) return <div className="min-h-screen flex items-center justify-center text-red-500">{error}</div>
 
@@ -137,9 +141,11 @@ export default function Drafts() {
                         ✎ Edit
                       </button>
                     )}
-                    <button className="bg-red-100 hover:bg-red-200 text-red-600 px-4 py-2 rounded-lg text-sm font-semibold">
-                      ✕ Dismiss
-                    </button>
+                      <button 
+                        onClick={() => handleDismiss(email.gmail_id)}
+                        className="bg-red-100 hover:bg-red-200 text-red-600 px-4 py-2 rounded-lg text-sm font-semibold">
+                        ✕ Dismiss
+                      </button>
                   </>
                 )}
               </div>
