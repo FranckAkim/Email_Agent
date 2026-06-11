@@ -285,7 +285,7 @@ Click "Connect Gmail" again to get a fresh token.
 **Gmail API not enabled**
 Go to https://console.developers.google.com/apis/api/gmail.googleapis.com and enable it for your project.
 
-**Only seeing 10 emails**
+**Only seeing 50 emails**
 In `app/services/gmail_service.py`, increase `max_results` in the `fetch_emails` function.
 
 **CORS error in browser**
@@ -295,6 +295,6 @@ Make sure your FastAPI backend is running and the CORS middleware is configured 
 
 ## Built By
 
-Franck Nangomoko (Dee)
+Franck N. (Dee)
 Graduate Student — Computer Information Systems, PVAMU
 GitHub: https://github.com/FranckAkim
